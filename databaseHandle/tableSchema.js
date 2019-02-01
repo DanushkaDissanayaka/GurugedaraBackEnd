@@ -24,7 +24,8 @@ const tables = {
             'role varchar(10),'+
             'CONSTRAINT PK_user PRIMARY key(UserID))',
         insertIntoTable : "insert into users(DOB,Email,UserID,ContactNo,password,AddStreet,AddCity,AddNo,FirstName,LastName,MiddleName,role) values ?",
-        SelectUser : 'SELECT * from users WHERE UserID ='
+        SelectUser : 'SELECT * from users WHERE UserID =',
+        countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?'
     },
 
     guardian:{

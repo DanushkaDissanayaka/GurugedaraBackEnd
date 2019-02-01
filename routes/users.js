@@ -8,41 +8,19 @@ const database = require('../databaseHandle/connectDatabase');
 
 // register user
 router.post('/studentRegister', function (req, res, next) {
-  /*const newUser = [
-    req.body.DOB,
-    req.body.email,
-    req.body.UserID,
-    req.body.ContactNo,
-    req.body.password,
-    req.body.AddStreet,
-    req.body.AddCity,
-    req.body.AddNo,
-    req.body.FirstName,
-    req.body.LastName,
-    req.body.MiddleName,
-    req.body.role
-  ] // new object for hold user registration data
-  database.addNewUser(newUser , function(err,user){
-    if(err){
-      if (err.sqlState =='23000') {
-        res.json({success: false, msg: 'User name exist'});  
-        return false;
-      }
-      console.log(err);
-      res.json({success: false, msg: 'Something went wrong'});  
-  }
-  else{
-      res.json({success: true, msg: 'User registerd'});
-  }
-  });*/
-  console.log(req.body);
 
-  let student = new user(req.body);
-  //console.log(NewUser.sqlUser);
-  student.registerStudent(function (value) {
-    //console.log(value);
-    res.json(value);
+  //console.log(req.body);
+
+  database.countUser(req.body.role, function (err, result) {
+    var number = result[0].number + 100
+    var ID = req.body.role.substr(0, 1).toUpperCase() + number.toString(); // generate user ID
+    let student = new user(req.body, ID);
+
+    student.registerStudent(function (value) {
+      res.json(value);
+    });
   });
+
 });
 
 router.post('/getuserId', function (req, res, next) {
@@ -51,10 +29,16 @@ router.post('/getuserId', function (req, res, next) {
 });
 
 router.post('/officeuserRegister', function (req, res, next) {
-  let officeuser = new user(req.body);
-  officeuser.registerOfficeUser(function (value) {
-    res.json(value);
-  })
+
+  database.countUser(req.body.role, function (err, result) {
+    var number = result[0].number + 100 // generate user ID
+    var ID = req.body.role.substr(0, 1).toUpperCase() + number.toString();
+    let officeuser = new user(req.body,ID);
+    officeuser.registerOfficeUser(function (value) {
+      res.json(value);
+    })
+  });
+
 });
 
 router.post('/register', function (req, res, next) {
@@ -175,11 +159,11 @@ router.post('/device', function (req, res, next) {
 router.post('/findUser', function (req, res, next) {
   const userId = req.body.userId
   database.selectUser(userId, function (err, result) {
-    if(err){
-      res.json();
+    if (err) {
+      res.json({success:false,msg:"Connection error"});
     }
-    else{
-      res.json({data:result});
+    else {
+      res.json({ data: result });
     }
   })
 })
@@ -204,8 +188,10 @@ function toObjectGuardian(user) {
   }
 }
 
-function user(User) {
-  User.UserID = getNewId(User.role);
+function user(User, ID) {
+  console.log(ID);
+
+  User.UserID = ID//getNewId(User.role);
   const userDetails = {
     role: User.role,
     usetID: User.UserID,
@@ -383,7 +369,7 @@ function getNewId(role) {
     }
     //console.log(daysintoYear(myDate));
     //console.log(role.substr(0,1).toUpperCase()+varID);
-    return role.substr(0, 1).toUpperCase() + varID;
+    return "S100"//role.substr(0, 1).toUpperCase() + varID;
   }
   catch (e) {
     console.log(e.message);
