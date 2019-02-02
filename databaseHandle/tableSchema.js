@@ -96,7 +96,7 @@ const tables = {
     },
     subjects:{
         createTable:"create table subjects("+
-            "subjectName   varchar(20),"+
+            "subjectName   varchar(100),"+
             "subjectID     varchar(10),"+
             "CONSTRAINT pk_subjects PRIMARY key(subjectID))",
         insertIntoTable : "INSERT INTO subjects (subjectName,subjectID) VALUES ?",
