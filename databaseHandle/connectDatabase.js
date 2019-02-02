@@ -206,11 +206,11 @@ module.exports.getClassDetails = function (callback) {
 }
 
 module.exports.getClassTItleFromTeacherId = function (teacherId, callback) {
-    con.query(tableSchema.tables.classes.selectClassTitleFromTeacherId, teacherId, callback);
+    con.query(tableSchema.tables.classes.selectClassTitleFromTeacherId, [teacherId], callback);
 }
 
 module.exports.getAllClassStudentDetailsOfaClass = function (classId, callback) {
-    con.query(tableSchema.tables.classes.getAllstudentDetailsOfaClass, classId, callback);
+    con.query(tableSchema.tables.classes.getAllstudentDetailsOfaClass, [classId], callback);
 }
 
 
