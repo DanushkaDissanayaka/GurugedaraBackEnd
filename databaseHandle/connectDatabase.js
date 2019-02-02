@@ -131,7 +131,7 @@ module.exports.countUser = function (role, callback) {
 }
 
 module.exports.selectStudentInformationFromGurdianUsername = function (username, callback) {
-    con.query(tableSchema.tables.users.selectStudentInformationFromGurdianUsername [username], callback);
+    con.query(tableSchema.tables.users.selectStudentInformationFromGurdianUsername ,[username], callback);
 }
 
 
