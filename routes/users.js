@@ -33,6 +33,7 @@ router.post('/getstudentFromGuardian', function (req, res, next) {
   const username = req.body.username;
   database.selectStudentInformationFromGurdianUsername(username,function(err,result){
     if(err){
+      console.log(err);
       res.json({ success: false, msg: 'Something went wrong' });
     }
     else{
