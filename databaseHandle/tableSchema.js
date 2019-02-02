@@ -25,7 +25,8 @@ const tables = {
             'CONSTRAINT PK_user PRIMARY key(UserID))',
         insertIntoTable : "insert into users(DOB,Email,UserID,ContactNo,password,AddStreet,AddCity,AddNo,FirstName,LastName,MiddleName,role) values ?",
         SelectUser : 'SELECT * from users WHERE UserID =',
-        countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?'
+        countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?',
+        selectStudentInformationFromGurdianUsername :"SELECT * FROM users WHERE UserID IN (SELECT UserId FROM guardianStudent WHERE guardianNIC IN (SELECT guardianNIC FROM guardian WHERE username = ?))"
     },
 
     guardian:{
@@ -73,7 +74,7 @@ const tables = {
             "CONSTRAINT fk_guardianStudent_student FOREIGN KEY (UserId) REFERENCES users( UserId) ON DELETE CASCADE)",
 
         insertIntoTable:'insert into guardianStudent(guardianNIC,UserId) values ?',
-        selectStudents:'SELECT UserId FROM `guardianStudent` WHERE guardianNIC = '
+        selectStudents:'SELECT UserId FROM `guardianStudent` WHERE guardianNIC = ',
     },
 
     device:{

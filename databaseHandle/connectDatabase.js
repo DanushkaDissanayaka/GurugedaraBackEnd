@@ -130,7 +130,9 @@ module.exports.countUser = function (role, callback) {
     con.query(tableSchema.tables.users.countusers, [role], callback);
 }
 
-
+module.exports.selectStudentInformationFromGurdianUsername = function (username, callback) {
+    con.query(tableSchema.tables.users.selectStudentInformationFromGurdianUsername [username], callback);
+}
 
 
 // subject database request

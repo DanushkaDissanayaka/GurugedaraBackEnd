@@ -29,6 +29,18 @@ router.post('/getuserId', function (req, res, next) {
   console.log(getNewId(role));
 });
 
+router.post('/getstudentFromGuardian', function (req, res, next) {
+  const username = req.body.username;
+  database.selectStudentInformationFromGurdianUsername(username,function(err,result){
+    if(err){
+      res.json({ success: false, msg: 'Something went wrong' });
+    }
+    else{
+      res.json({ success: true, data:result});
+    }
+  });
+});
+
 router.post('/officeuserRegister', function (req, res, next) {
 
   database.countUser(req.body.role, function (err, result) {
