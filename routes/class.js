@@ -93,7 +93,7 @@ router.post("/getAllstudentDetailsOfAclass",function(req,res,next){
             res.json({success : false , massage : "Error something wrong"}); 
         }
         else{
-            res.json({ success: true, msg: 'Class Deleted'});
+            res.json({ success: true, data:result});
         }
     });
 });
