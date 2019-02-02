@@ -4,7 +4,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/jwt');
 const database = require('../databaseHandle/connectDatabase');
-
+const moment = require('moment');
+const momentTz = require('moment-timezone');
 
 // register user
 router.post('/studentRegister', function (req, res, next) {
@@ -163,7 +164,10 @@ router.post('/findUser', function (req, res, next) {
       res.json({success:false,msg:"Connection error"});
     }
     else {
-      res.json({ data: result });
+      for (let index = 0; index < result.length; index++) {
+        result[index].DOB = moment(result[index].DOB).format("YYYY-MM-DD");
+    }
+      res.json({ success:true,data: result });
     }
   })
 })
@@ -234,7 +238,7 @@ function user(User, ID) {
         if (err) {
           console.log(err);
           if (err.sqlState == '23000') {
-            callback({ success: false, msg: 'User name exist' });
+            callback({ success: false, msg: 'Email exist' });
             return false;
           }
           console.log(err);
@@ -285,7 +289,7 @@ function user(User, ID) {
     database.addNewUser(this.sqlUser, function (err, user) {
       if (err) {
         if (err.sqlState == '23000') {
-          callback({ success: false, msg: 'User name exist' });
+          callback({ success: false, msg: 'Email exist' });
           return false;
         }
         callback({ success: false, msg: 'Something went wrong' });

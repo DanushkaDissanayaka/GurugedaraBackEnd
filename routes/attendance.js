@@ -75,6 +75,7 @@ router.post('/markAttendance',function(req,res,next){
     //mark attendance
 });
 
+
 router.get("/getAttendance",function(req,res,next){
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;

@@ -11,7 +11,7 @@ const tables = {
             'DOB date,'+
             'MsgFlag boolean DEFAULT 0,'+
             'NotificationFlag boolean DEFAULT 0,'+
-            'Email varchar(50),'+
+            'Email varchar(50) UNIQUE,'+
             'UserID char(10),'+
             'ContactNo char(10),'+
             'password varchar(100),'+
