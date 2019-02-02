@@ -84,6 +84,18 @@ router.post("/deleteClass",function(req,res,next){
     });
 });
 
+router.post("/getAllstudentDetailsOfAclass",function(req,res,next){
+    const classID = req.body.ClassID;
+    database.getAllClassStudentDetailsOfaClass(classID,function(err,result){
+        if(err){
+            res.json({success : false , massage : "Error something wrong"}); 
+        }
+        else{
+            res.json({ success: true, msg: 'Class Deleted'});
+        }
+    });
+});
+
 router.post("/ClassTitle",function(req,res,next){
     const teacherId = req.body.userId;
     database.getClassTItleFromTeacherId(teacherId,function(err,result){
