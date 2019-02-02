@@ -15,6 +15,7 @@ const notification = require('./routes/notification');
 const marks = require('./routes/marks');
 const fee = require('./routes/fee');
 const location = require('./routes/location');
+const device = require('./routes/device');
 //set port
 const port = 3000;
 // connect to database
@@ -58,6 +59,10 @@ app.use('/location',location);
 
 // Set class fee
 app.use('/fee',fee);
+
+// Set device
+app.use('/device',device);
+
 
 // index route
 app.get('/',function(req,res){

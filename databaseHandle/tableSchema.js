@@ -84,7 +84,8 @@ const tables = {
             "type          varchar(10),"+
             "CONSTRAINT pk_device PRIMARY key(DeviceId),"+
             "CONSTRAINT fk_device_locations FOREIGN KEY (locationID) REFERENCES locations( locationID) ON DELETE CASCADE)",
-        insertIntoTable :"INSERT INTO device(DeviceId,locationID,type) VALUES ?"
+        insertIntoTable :"INSERT INTO device(DeviceId,locationID,type) VALUES ?",
+        selectAddDevice:"SELECT * FROM device"
     },
     locations:{
         createTable :"create  table locations("+

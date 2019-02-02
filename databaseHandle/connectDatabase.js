@@ -263,3 +263,13 @@ module.exports.addMarks = function (data, callback) {
     con.query(tableSchema.tables.mark.insertIntoTable, [[data]], callback)
 }
 
+// device database request
+
+module.exports.adddevice = function (data, callback) {
+    con.query(tableSchema.tables.device.insertIntoTable, [[data]], callback)
+}
+
+module.exports.getdevicedetails = function(callback){
+    con.query(tableSchema.tables.device.selectAddDevice,callback);
+}
+
