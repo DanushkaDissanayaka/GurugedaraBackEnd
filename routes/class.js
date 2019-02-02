@@ -88,6 +88,8 @@ router.post("/getAllstudentDetailsOfAclass",function(req,res,next){
     const classID = req.body.ClassID;
     database.getAllClassStudentDetailsOfaClass(classID,function(err,result){
         if(err){
+            console.log(err);
+            
             res.json({success : false , massage : "Error something wrong"}); 
         }
         else{
