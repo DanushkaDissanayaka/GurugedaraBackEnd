@@ -76,10 +76,23 @@ router.post('/markAttendance',function(req,res,next){
 });
 
 
-router.get("/getAttendance",function(req,res,next){
+router.get("/getAttendanceStudent",function(req,res,next){
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
-    database.getAttendance(UserId , function(err,result){
+    database.getAttendancestudent(UserId,ClassId, function(err,result){
+        if(err){
+            res.json({success : false , massage : "Error something wrong"});
+        }
+        else{
+            res.json({success : true , data : result});
+        }
+    });
+});
+
+
+router.get("/getAttendanceTeacher",function(req,res,next){
+    const classID = req.body.ClassId;
+    database.getAttendance(ClassId , function(err,result){
         if(err){
             res.json({success : false , massage : "Error something wrong"});
         }

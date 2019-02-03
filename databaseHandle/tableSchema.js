@@ -153,7 +153,8 @@ const tables = {
             "CONSTRAINT fk_Attendance_device   FOREIGN KEY (DeviceId)  REFERENCES device(DeviceId)   ON DELETE CASCADE,"+
             "CONSTRAINT fk_Attendance_classes  FOREIGN KEY (ClassId)  REFERENCES classes(ClassId)    ON DELETE CASCADE)",
             insertIntoTable : "INSERT INTO Attendance (DeviceId,UserId,ClassId,atDate,InTime) VALUES ?",
-            getAttendance : "SELECT"
+            getAttendanceStudent : "SELECT * FROM Attendance WHERE UserId = ? AND ClassId = ?",
+            getAttendanceTeacher : "SELECT * FROM Attendance WHERE ClassId = ?",
     },
     fee:{
         createTable :"create table fee("+

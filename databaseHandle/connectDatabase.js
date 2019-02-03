@@ -182,8 +182,12 @@ module.exports.addAttendaceRecord = function (data, callback) {
     con.query(tableSchema.tables.attendance.insertIntoTable, [[data]], callback);
 }
 
-module.exports.getAttendance = function (userId, callback) {
-    con.query(tableSchema, [userId], callback);
+module.exports.getAttendancestudent = function (userId,classId, callback) {
+    con.query(tableSchema.tables.attendance.getAttendanceStudent, [userId,classId], callback);
+}
+
+module.exports.getAttendanceTeacher = function (classId, callback) {
+    con.query(tableSchema.tables.attendance.getAttendanceStudent, [classId], callback);
 }
 
 // Class database request
