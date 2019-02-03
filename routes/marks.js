@@ -6,11 +6,9 @@ const config = require('../config/jwt');
 const database = require('../databaseHandle/connectDatabase');
 
 router.post('/addMarks',function(req,res,next){
-    const data = req.body.marks
+    const data = req.body.marks;
     console.log(data);
-    
-            
-    /*database.addMarks(data,function(err,result){
+    database.addMarks(data,function(err,result){
         if(err){
             console.log(err);
             res.json({success : false , msg : "Error something wrong"});
@@ -18,7 +16,7 @@ router.post('/addMarks',function(req,res,next){
         else{
             res.json({ success: true, msg: 'successfuly aded'});
         }
-    })*/
+    })
 })
 
 module.exports = router;

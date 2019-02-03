@@ -260,7 +260,7 @@ module.exports.changefeeRecords = function (data, callback) {
 // marks database request
 
 module.exports.addMarks = function (data, callback) {
-    con.query(tableSchema.tables.mark.insertIntoTable, [[data]], callback)
+    con.query(tableSchema.tables.mark.insertIntoTable, [data], callback)
 }
 
 // device database request
