@@ -235,8 +235,8 @@ const tables = {
     },
     multiTableQuerry : {
         SearchClassIDWithDeviceIdUserIDTime : "SELECT classID FROM studentClass WHERE ClassID IN (SELECT ClassID FROM classes WHERE locationID IN (SELECT locationID FROM device WHERE DeviceId = ?) AND dateOfWeek = ? AND startTime BETWEEN ? AND ?) AND UserID = ?",
-        setStuentNotificationFlag :"UPDATE users SET NotificationFlag = 1 WHERE UserID IN (SELECT UserId FROM studentclass WHERE ClassID = ?)",
-        setGuardianNotificationFlag:"UPDATE guardian SET NotificationFlag = 1 WHERE guardianNIC IN (SELECT guardianNIC FROM guardianstudent WHERE UserId IN (SELECT UserId FROM studentclass WHERE ClassID = ?))"
+        setStuentNotificationFlag :"UPDATE users SET NotificationFlag = 1 WHERE UserID IN (SELECT UserId FROM studentClass WHERE ClassID = ?)",
+        setGuardianNotificationFlag:"UPDATE guardian SET NotificationFlag = 1 WHERE guardianNIC IN (SELECT guardianNIC FROM guardianStudent WHERE UserId IN (SELECT UserId FROM studentclass WHERE ClassID = ?))"
     }
 }
 
