@@ -78,7 +78,7 @@ router.post('/markAttendance',function(req,res,next){
 });
 
 
-router.get("/getAttendanceStudent",function(req,res,next){
+router.post("/getAttendanceStudent",function(req,res,next){
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
     database.getAttendancestudent(UserId,classID, function(err,result){
@@ -93,7 +93,7 @@ router.get("/getAttendanceStudent",function(req,res,next){
 });
 
 
-router.get("/getAttendanceTeacher",function(req,res,next){
+router.post("/getAttendanceTeacher",function(req,res,next){
     const classID = req.body.ClassId;
     database.getAttendance(classID , function(err,result){
         if(err){
