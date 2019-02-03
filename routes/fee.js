@@ -24,4 +24,32 @@ router.post("/addFee", function (req, res, next) {
     });
 });
 
+
+router.post("/getFeeStudent",function(req,res,next){
+    const UserId = req.body.UserId;
+    const classID = req.body.ClassId;
+    database.getAttendancestudent(UserId,classID, function(err,result){
+        if(err){
+            console.log(err);
+            res.json({success : false , massage : "Error something wrong"});
+        }
+        else{
+            res.json({success : true , data : result});
+        }
+    });
+});
+
+router.post("/getFeeTeacher",function(req,res,next){
+    const classID = req.body.ClassId;
+    database.getAttendanceTeacher(classID , function(err,result){
+        if(err){
+            console.log(err);
+            res.json({success : false , massage : "Error something wrong"});
+        }
+        else{
+            res.json({success : true , data : result});
+        }
+    });
+});
+
 module.exports = router;

@@ -87,6 +87,9 @@ router.post("/getAttendanceStudent",function(req,res,next){
             res.json({success : false , massage : "Error something wrong"});
         }
         else{
+            for (let index = 0; index < result.length; index++) {
+                result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+            }
             res.json({success : true , data : result});
         }
     });
@@ -101,6 +104,9 @@ router.post("/getAttendanceTeacher",function(req,res,next){
             res.json({success : false , massage : "Error something wrong"});
         }
         else{
+            for (let index = 0; index < result.length; index++) {
+                result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+            }
             res.json({success : true , data : result});
         }
     });
