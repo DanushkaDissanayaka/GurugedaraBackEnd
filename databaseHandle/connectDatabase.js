@@ -280,5 +280,4 @@ module.exports.getdevicedetails = function(callback){
 // guardian database request
 module.exports.getgurdianInfoFromStudentId = function (userId, callback) {
     con.query(tableSchema.tables.guardian.getGurdianInfoFromStudentId, [userId], callback)
-
-
+}
