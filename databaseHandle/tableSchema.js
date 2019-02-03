@@ -26,7 +26,8 @@ const tables = {
         insertIntoTable : "insert into users(DOB,Email,UserID,ContactNo,password,AddStreet,AddCity,AddNo,FirstName,LastName,MiddleName,role) values ?",
         SelectUser : 'SELECT * from users WHERE UserID =',
         countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?',
-        selectStudentInformationFromGurdianUsername :"SELECT * FROM users WHERE UserID IN (SELECT UserId FROM guardianStudent WHERE guardianNIC IN (SELECT guardianNIC FROM guardian WHERE username = ?))"
+        selectStudentInformationFromGurdianUsername :"SELECT * FROM users WHERE UserID IN (SELECT UserId FROM guardianStudent WHERE guardianNIC IN (SELECT guardianNIC FROM guardian WHERE username = ?))",
+        desebleNotificationFlag:""
     },
 
     guardian:{
