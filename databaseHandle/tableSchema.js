@@ -153,8 +153,8 @@ const tables = {
             "CONSTRAINT fk_Attendance_device   FOREIGN KEY (DeviceId)  REFERENCES device(DeviceId)   ON DELETE CASCADE,"+
             "CONSTRAINT fk_Attendance_classes  FOREIGN KEY (ClassId)  REFERENCES classes(ClassId)    ON DELETE CASCADE)",
             insertIntoTable : "INSERT INTO Attendance (DeviceId,UserId,ClassId,atDate,InTime) VALUES ?",
-            getAttendanceStudent : "SELECT * FROM Attendance WHERE UserId = ? AND ClassId = ?",
-            getAttendanceTeacher : "SELECT * FROM Attendance WHERE ClassId = ?",
+            getAttendanceStudent : "SELECT * FROM Attendance WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassId = ? AND UserId = ?",
+            getAttendanceTeacher : "SELECT * FROM `Attendance` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassId = ?",
     },
     fee:{
         createTable :"create table fee("+
@@ -167,7 +167,7 @@ const tables = {
             "CONSTRAINT fk_fee_users_student        FOREIGN KEY (StudentId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_fee_users_officeuser     FOREIGN KEY (OfficeuserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_fee_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
-            insertIntoTable : "INSERT INTO Attendance (StudentId,OfficeuserId,ClassId,atDate,amount) VALUES ?"
+            insertIntoTable : "INSERT INTO fee (StudentId,OfficeuserId,ClassID,atDate,amount) VALUES ?"
     },
     mark:{
         createTable :"create table mark("+

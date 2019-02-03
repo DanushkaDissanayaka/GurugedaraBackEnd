@@ -14,6 +14,7 @@ router.post("/addFee", function (req, res, next) {
     const amount = req.body.amount
 
     const feeData = [StudentId, OfficeuserId, ClassId, atDate, amount]
+    
     database.addFeerecord(feeData, function (err, result) {
         if (err) {
             res.json({ success: false, msg: "Something went wrong" })

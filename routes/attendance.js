@@ -81,7 +81,9 @@ router.post('/markAttendance',function(req,res,next){
 router.post("/getAttendanceStudent",function(req,res,next){
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
-    database.getAttendancestudent(UserId,classID, function(err,result){
+    const month = req.body.month;
+    const year = req.body.year
+    database.getAttendancestudent(month,year,classID,UserId, function(err,result){
         if(err){
             console.log(err);
             res.json({success : false , massage : "Error something wrong"});
@@ -98,7 +100,7 @@ router.post("/getAttendanceStudent",function(req,res,next){
 
 router.post("/getAttendanceTeacher",function(req,res,next){
     const classID = req.body.ClassId;
-    database.getAttendanceTeacher(classID , function(err,result){
+    database.getAttendanceTeacher(month,year,classID , function(err,result){
         if(err){
             console.log(err);
             res.json({success : false , massage : "Error something wrong"});
