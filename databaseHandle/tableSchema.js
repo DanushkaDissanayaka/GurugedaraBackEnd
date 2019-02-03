@@ -27,7 +27,8 @@ const tables = {
         SelectUser : 'SELECT * from users WHERE UserID =',
         countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?',
         selectStudentInformationFromGurdianUsername :"SELECT * FROM users WHERE UserID IN (SELECT UserId FROM guardianStudent WHERE guardianNIC IN (SELECT guardianNIC FROM guardian WHERE username = ?))",
-        desebleNotificationFlag:""
+        desebleNotificationFlag:"",
+        selectAllRoleType:"Select * from users  WHERE role = ?"
     },
 
     guardian:{

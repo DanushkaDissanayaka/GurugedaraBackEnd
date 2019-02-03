@@ -197,6 +197,19 @@ router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
   })
 })
 
+
+router.post('/getAllStudentDetailsFromRole', function (req, res, next) {
+  const userId = req.body.role
+  database.gelAllusersInfoWithRole(role, function (err, result) {
+    if (err) {
+      res.json({ success: false, msg: "Connection error" });
+    }
+    else {
+      res.json({ success: true, data: result });
+    }
+  })
+})
+
 module.exports = router;
 
 function toObject(user) {

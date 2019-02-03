@@ -126,6 +126,11 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
     });
 }
 
+
+module.exports.gelAllusersInfoWithRole = function (role, callback) {
+    con.query(tableSchema.tables.users.selectAllRoleType, [role], callback)
+}
+
 module.exports.countUser = function (role, callback) {
     con.query(tableSchema.tables.users.countusers, [role], callback);
 }
