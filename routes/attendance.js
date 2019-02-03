@@ -95,7 +95,7 @@ router.post("/getAttendanceStudent",function(req,res,next){
 
 router.post("/getAttendanceTeacher",function(req,res,next){
     const classID = req.body.ClassId;
-    database.getAttendance(classID , function(err,result){
+    database.getAttendanceTeacher(classID , function(err,result){
         if(err){
             console.log(err);
             res.json({success : false , massage : "Error something wrong"});
