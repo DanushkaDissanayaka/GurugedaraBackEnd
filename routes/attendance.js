@@ -23,6 +23,7 @@ router.post('/markAttendance',function(req,res,next){
     //find student relavant to nuId (with NuId)
      database.SelectStudentWithCardId(cardId,function(err,result){
         if (err){
+            console.log(err);
             res.json({success : false , massage : "Error something wrong"});
         }
         else{
@@ -45,6 +46,7 @@ router.post('/markAttendance',function(req,res,next){
                             ]
                             database.addAttendaceRecord(data,function(err,result){
                                 if (err){
+                                    console.log(err);
                                     if (err.sqlState == '23000') {
                                         res.json({ success: false, msg: 'Attendance Alredy marked' });
                                         return false;
@@ -79,7 +81,7 @@ router.post('/markAttendance',function(req,res,next){
 router.get("/getAttendanceStudent",function(req,res,next){
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
-    database.getAttendancestudent(UserId,ClassId, function(err,result){
+    database.getAttendancestudent(UserId,classID, function(err,result){
         if(err){
             res.json({success : false , massage : "Error something wrong"});
         }
@@ -92,7 +94,7 @@ router.get("/getAttendanceStudent",function(req,res,next){
 
 router.get("/getAttendanceTeacher",function(req,res,next){
     const classID = req.body.ClassId;
-    database.getAttendance(ClassId , function(err,result){
+    database.getAttendance(classID , function(err,result){
         if(err){
             res.json({success : false , massage : "Error something wrong"});
         }
