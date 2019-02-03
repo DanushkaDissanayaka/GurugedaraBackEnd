@@ -187,7 +187,7 @@ module.exports.getAttendancestudent = function (userId,classId, callback) {
 }
 
 module.exports.getAttendanceTeacher = function (classId, callback) {
-    con.query(tableSchema.tables.attendance.getAttendanceStudent, [classId], callback);
+    con.query(tableSchema.tables.attendance.getAttendanceTeacher, [classId], callback);
 }
 
 // Class database request
