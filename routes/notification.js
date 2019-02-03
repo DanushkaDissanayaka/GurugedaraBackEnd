@@ -84,11 +84,13 @@ router.post('/addNotification', function (req, res, next) {
         else {
             database.setGuardianNotificationFlag(ClassID,function(err,result){
                 if (err) {
+                    console.log(err);
                     res.json({ success: false, msg: 'Something went wrong' }); 
                 }
                 else{
                     database.setStudentNotificationFlag(ClassID,function(err,result){
                         if (err) {
+                            console.log(err);
                             res.json({ success: false, msg: 'Something went wrong' }); 
                         }
                         else{
