@@ -83,6 +83,7 @@ router.get("/getAttendanceStudent",function(req,res,next){
     const classID = req.body.ClassId;
     database.getAttendancestudent(UserId,classID, function(err,result){
         if(err){
+            console.log(err);
             res.json({success : false , massage : "Error something wrong"});
         }
         else{
@@ -96,6 +97,7 @@ router.get("/getAttendanceTeacher",function(req,res,next){
     const classID = req.body.ClassId;
     database.getAttendance(classID , function(err,result){
         if(err){
+            console.log(err);
             res.json({success : false , massage : "Error something wrong"});
         }
         else{
