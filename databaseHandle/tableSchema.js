@@ -49,7 +49,8 @@ const tables = {
             'CONSTRAINT pk_guardian PRIMARY key(guardianNIC))',
 
         insertIntoTable:'insert into guardian(DOB,Email,username,ContactNo,password,AddStreet,AddCity,AddNo,FirstName,LastName,MiddleName,guardianNIC) values ?',
-        SelectUser :'SELECT * from guardian WHERE username ='
+        SelectUser :'SELECT * from guardian WHERE username =',
+        getGurdianInfoFromStudentId:"SELECT FirstName,LastName,username FROM `guardian` WHERE guardianNIC IN (SELECT guardianNIC FROM `guardianStudent` WHERE UserId = ?)"
     },
 
     student:{

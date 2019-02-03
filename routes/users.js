@@ -11,7 +11,6 @@ const momentTz = require('moment-timezone');
 router.post('/studentRegister', function (req, res, next) {
 
   //console.log(req.body);
-
   database.countUser(req.body.role, function (err, result) {
     var number = result[0].number + 100
     var ID = req.body.role.substr(0, 1).toUpperCase() + number.toString(); // generate user ID
@@ -180,6 +179,19 @@ router.post('/findUser', function (req, res, next) {
       for (let index = 0; index < result.length; index++) {
         result[index].DOB = moment(result[index].DOB).format("YYYY-MM-DD");
       }
+      res.json({ success: true, data: result });
+    }
+  })
+})
+
+
+router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
+  const userId = req.body.userId
+  database.getgurdianInfoFromStudentId(userId, function (err, result) {
+    if (err) {
+      res.json({ success: false, msg: "Connection error" });
+    }
+    else {
       res.json({ success: true, data: result });
     }
   })
