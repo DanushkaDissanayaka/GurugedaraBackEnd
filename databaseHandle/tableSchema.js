@@ -217,7 +217,7 @@ const tables = {
             "CONSTRAINT pk_mark             PRIMARY key(ClassID,UserId,atDate),"+
             "CONSTRAINT fk_mark  FOREIGN KEY (UserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_pk_mark_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
-            insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,atTime,marks,msg) VALUES ?",
+            insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,marks,msg) VALUES ?",
     },
     msg :{
         createTable : "create table msg("+
