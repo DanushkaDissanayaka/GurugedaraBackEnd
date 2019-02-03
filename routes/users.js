@@ -31,13 +31,13 @@ router.post('/getuserId', function (req, res, next) {
 
 router.post('/getstudentFromGuardian', function (req, res, next) {
   const username = req.body.username;
-  database.selectStudentInformationFromGurdianUsername(username,function(err,result){
-    if(err){
+  database.selectStudentInformationFromGurdianUsername(username, function (err, result) {
+    if (err) {
       console.log(err);
       res.json({ success: false, msg: 'Something went wrong' });
     }
-    else{
-      res.json({ success: true, data:result});
+    else {
+      res.json({ success: true, data: result });
     }
   });
 });
@@ -47,7 +47,7 @@ router.post('/officeuserRegister', function (req, res, next) {
   database.countUser(req.body.role, function (err, result) {
     var number = result[0].number + 100 // generate user ID
     var ID = req.body.role.substr(0, 1).toUpperCase() + number.toString();
-    let officeuser = new user(req.body,ID);
+    let officeuser = new user(req.body, ID);
     officeuser.registerOfficeUser(function (value) {
       res.json(value);
     })
@@ -174,13 +174,13 @@ router.post('/findUser', function (req, res, next) {
   const userId = req.body.userId
   database.selectUser(userId, function (err, result) {
     if (err) {
-      res.json({success:false,msg:"Connection error"});
+      res.json({ success: false, msg: "Connection error" });
     }
     else {
       for (let index = 0; index < result.length; index++) {
         result[index].DOB = moment(result[index].DOB).format("YYYY-MM-DD");
-    }
-      res.json({ success:true,data: result });
+      }
+      res.json({ success: true, data: result });
     }
   })
 })
