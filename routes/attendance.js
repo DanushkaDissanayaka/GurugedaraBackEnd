@@ -101,7 +101,20 @@ router.post("/addattendance", function (req, res, next) {
         }
         else {
             console.log(result);
-            res.json({ success: true, data: result });
+            res.json({ success: true, data: "No class found" });
+
+            if(result.length != 0){
+                
+                const attendance = [
+                    DeviceId = deviceId,
+                    UId = UserId,
+                    ClassId = result[0].classID,
+                    atDate = today.format("YYYY-MM-DD"),
+                    InTime = today.format("HH:mm")
+                ]
+                console.log(attendance);
+            }
+            
         }
     });
 });
