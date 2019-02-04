@@ -113,7 +113,7 @@ router.post("/addattendance", function (req, res, next) {
                     }
                     else {
                         console.log(result);
-                        res.json({ success: false, data: "No class found" });
+                        res.json({ success: false, massage: "No class found" });
 
                         if (result.length != 0) {
 
@@ -125,15 +125,30 @@ router.post("/addattendance", function (req, res, next) {
                                 InTime = today.format("HH:mm")
                             ]
                             console.log(attendance);
+                            database.addAttendaceRecord(data, function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                    if (err.sqlState == '23000') {
+                                        res.json({ success: false, massage: 'Attendance Alredy marked' });
+                                        return false;
+                                    }
+                                    else {
+                                        res.json({ success: false, massage: 'System Error' });
+                                    }
+                                }
+                                else {
+                                    res.json({ success: true, massage: 'Attendance Added' });
+                                }
+                            });
                         }
                         else {
-                            res.json({ success: false, data: "Unauthorized access" });
+                            res.json({ success: false, massage: "Unauthorized access" });
                         }
                     }
                 });
             }
-            else{
-                res.json({ success: false, data: "User not found" });
+            else {
+                res.json({ success: false, massage: "User not found" });
             }
         }
     })
