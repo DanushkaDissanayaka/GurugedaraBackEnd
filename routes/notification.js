@@ -10,8 +10,8 @@ const momentTz = require('moment-timezone');
 router.post('/getNotification', function (req, res, next) {
     const userId = req.body.userId
     const role = req.body.role
-    if(role == "student"){
-        database.getNotification(userId,function (err, result) {
+    if (role == "student") {
+        database.getNotification(userId, function (err, result) {
             if (err) {
                 console.log(err);
                 res.json({ success: false, msg: 'Something went wrong' });
@@ -20,13 +20,13 @@ router.post('/getNotification', function (req, res, next) {
                 for (let index = 0; index < result.length; index++) {
                     result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
                 }
-                res.json({ success: true, data:result });
+                res.json({ success: true, data: result });
             }
         });
         return;
     }
-    else if (role == "teacher"){
-        database.getNotificationTeachers(userId,function (err, result) {
+    else if (role == "teacher") {
+        database.getNotificationTeachers(userId, function (err, result) {
             if (err) {
                 console.log(err);
                 res.json({ success: false, msg: 'Something went wrong' });
@@ -35,23 +35,24 @@ router.post('/getNotification', function (req, res, next) {
                 for (let index = 0; index < result.length; index++) {
                     result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
                 }
-                res.json({ success: true, data:result });
+                res.json({ success: true, data: result });
             }
         });
         return;
     }
-    else if (role == "gurdian"){
+    else if (role == "gurdian") {
         return;
     }
-    else if (role == "admin"){
-        res.json({success:false , msg : "Unothorize atemp"})
+    else if (role == "admin") {
+        res.json({ success: false, msg: "Unothorize atemp" })
         return;
     }
-    else{
-        res.json({success:false , msg : "Unothorize atemp"})
+    else {
+        res.json({ success: false, msg: "Unothorize atemp" })
         return;
     }
 });
+
 
 router.post('/addNotification', function (req, res, next) {
     const today = momentTz.tz(new Date(), "Asia/Colombo");
@@ -75,25 +76,25 @@ router.post('/addNotification', function (req, res, next) {
     ]
 
     console.log(data);
-    
-    database.addNotification(data,function (err, result) {
+
+    database.addNotification(data, function (err, result) {
         if (err) {
             console.log(err);
             res.json({ success: false, msg: 'Something went wrong' });
         }
         else {
-            database.setGuardianNotificationFlag(ClassID,function(err,result){
+            database.setGuardianNotificationFlag(ClassID, function (err, result) {
                 if (err) {
                     console.log(err);
-                    res.json({ success: false, msg: 'Something went wrong' }); 
+                    res.json({ success: false, msg: 'Something went wrong' });
                 }
-                else{
-                    database.setStudentNotificationFlag(ClassID,function(err,result){
+                else {
+                    database.setStudentNotificationFlag(ClassID, function (err, result) {
                         if (err) {
                             console.log(err);
-                            res.json({ success: false, msg: 'Something went wrong' }); 
+                            res.json({ success: false, msg: 'Something went wrong' });
                         }
-                        else{
+                        else {
                             res.json({ success: true, msg: 'Notification Added' });
                         }
                     })
@@ -111,36 +112,36 @@ router.get('/getNotificationType', function (req, res, next) {
             res.json({ success: false, msg: 'Something went wrong' });
         }
         else {
-            res.json({ success: true, data:result });
+            res.json({ success: true, data: result });
         }
     });
 });
 
 router.post('/addNotificationType', function (req, res, next) {
-    const data =[
+    const data = [
         req.body.name,
         req.body.typeId
     ]
-    database.addNotificationType(data,function (err, result) {
+    database.addNotificationType(data, function (err, result) {
         if (err) {
             if (err.sqlState == '23000') {
                 res.json({ success: false, msg: 'Notification Type exist' });
                 return false;
-              }
+            }
             res.json({ success: false, msg: 'Something went wrong' });
         }
         else {
-            res.json({ success: true, msg:"notification type Added" });
+            res.json({ success: true, msg: "notification type Added" });
         }
     });
 });
 
-router.post('/deltNotification',function(req,res,next){
+router.post('/deltNotification', function (req, res, next) {
     const ClassID = req.body.ClassID
     const userId = req.body.userId
     const atDate = req.body.atDate
     const atTime = req.body.atTime
-    database.detleteNotification(ClassID,userId,atDate,atTime,function (err, result) {
+    database.detleteNotification(ClassID, userId, atDate, atTime, function (err, result) {
         if (err) {
             console.log(err);
             res.json({ success: false, msg: 'Something went wrong' });
@@ -151,6 +152,39 @@ router.post('/deltNotification',function(req,res,next){
         }
     });
 });
+
+
+router.post('/desableNotification', function (req, res, next) {
+
+    const userId = req.body.userId
+    const role = req.body.role
+
+    if (role == "guardian") {
+        database.disablenotificationFlagGuardian(userId, function (err, result) {
+            if (err) {
+                console.log(err);
+                res.json({ success: false });
+            }
+            else {
+                res.json({ success: true });
+            }
+        });
+    }
+    else {
+        database.disableNotificationFlagOtherUsers(userId, function (err, result) {
+            if (err) {
+                console.log(err);
+                res.json({ success: false });
+            }
+            else {
+                res.json({ success: true });
+            }
+        });
+    }
+
+});
+
+
 
 
 

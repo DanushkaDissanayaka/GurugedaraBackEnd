@@ -27,8 +27,11 @@ const tables = {
         SelectUser : 'SELECT * from users WHERE UserID =',
         countusers:'SELECT COUNT(role) AS number FROM users WHERE role = ?',
         selectStudentInformationFromGurdianUsername :"SELECT * FROM users WHERE UserID IN (SELECT UserId FROM guardianStudent WHERE guardianNIC IN (SELECT guardianNIC FROM guardian WHERE username = ?))",
-        desebleNotificationFlag:"",
-        selectAllRoleType:"Select * from users  WHERE role = ?"
+        desebleNotificationFlag:"UPDATE users SET NotificationFlag = 0 WHERE UserID = ?",
+        setMessageFlag:"UPDATE users SET MsgFlag = 1 WHERE UserID = ?",
+        disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE UserID = ?",
+        selectAllRoleType:"Select * from users  WHERE role = ?",
+        changePassword:"UPDATE users SET password = ? WHERE UserID = ?"
     },
 
     guardian:{
@@ -51,7 +54,11 @@ const tables = {
 
         insertIntoTable:'insert into guardian(DOB,Email,username,ContactNo,password,AddStreet,AddCity,AddNo,FirstName,LastName,MiddleName,guardianNIC) values ?',
         SelectUser :'SELECT * from guardian WHERE username =',
-        getGurdianInfoFromStudentId:"SELECT FirstName,LastName,username FROM `guardian` WHERE guardianNIC IN (SELECT guardianNIC FROM `guardianStudent` WHERE UserId = ?)"
+        getGurdianInfoFromStudentId:"SELECT FirstName,LastName,username FROM `guardian` WHERE guardianNIC IN (SELECT guardianNIC FROM `guardianStudent` WHERE UserId = ?)",
+        changePassword:"UPDATE guardian SET password = ? WHERE username = ?",
+        desebleNotificationFlag:"UPDATE guardian SET NotificationFlag = 0 WHERE UserID = ?",
+        setMessageFlag:"UPDATE users SET MsgFlag = 1 WHERE username = ?",
+        disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE username = ?",
     },
 
     student:{
@@ -141,6 +148,7 @@ const tables = {
             "CONSTRAINT fk_studentClass_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
         insertIntoTable:"INSERT INTO studentClass (UserID,ClassID) VALUES ?",
         selectStudentEnrolledSubjects :"SELECT * FROM classes WHERE ClassID IN (SELECT ClassID FROM studentClass WHERE UserID = ?)",
+        unEnrollStudent:"DELETE FROM studentClass WHERE UserID = ? AND ClassID = ?",
     },
     attendance: {
         createTable : "create table Attendance("+
@@ -169,7 +177,10 @@ const tables = {
             "CONSTRAINT fk_fee_users_student        FOREIGN KEY (StudentId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_fee_users_officeuser     FOREIGN KEY (OfficeuserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_fee_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
-            insertIntoTable : "INSERT INTO fee (StudentId,OfficeuserId,ClassID,atDate,amount) VALUES ?"
+            insertIntoTable : "INSERT INTO fee (StudentId,OfficeuserId,ClassID,atDate,amount) VALUES ?",
+            getFeeStudent : "SELECT * FROM fee WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ? AND StudentId = ?",
+            getFeeTeacher : "SELECT * FROM `fee` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ?",
+            updateFee:"",
     },
     mark:{
         createTable :"create table mark("+
@@ -181,7 +192,10 @@ const tables = {
             "CONSTRAINT pk_mark             PRIMARY key(ClassID,UserId,atDate),"+
             "CONSTRAINT fk_mark  FOREIGN KEY (UserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_pk_mark_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
-            insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,marks,description) VALUES ?"
+            insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,marks,description) VALUES ?",
+            getMarkStudent : "SELECT * FROM mark WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ? AND UserId = ?",
+            getMarkTeacher : "SELECT * FROM `mark` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ?",
+            udateMarks:"",
     },
     notice:{
         createTable:"create table notice(" +
@@ -210,7 +224,7 @@ const tables = {
             getnoticeType:"SELECT * FROM noticetype",
     },
 
-    mark :{
+    /*mark :{
         createTable : "create table mark("+
             "UserId    varchar(10),"+
             "ClassID   varchar(10),"+
@@ -221,7 +235,7 @@ const tables = {
             "CONSTRAINT fk_mark  FOREIGN KEY (UserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_pk_mark_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
             insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,marks,description) VALUES ?",
-    },
+    },*/
     msg :{
         createTable : "create table msg("+
             "resiverUserId      varchar(10),"+
@@ -229,18 +243,19 @@ const tables = {
             "atDate             date,"+
             "atTime             time,"+
             "title              varchar(50),"+
-            "msg                varchar(100),"+
+            "msg                varchar(255),"+
             "CONSTRAINT pk_msg                           PRIMARY key(atDate,atTime,resiverUserId,senderUserId),"+
             "CONSTRAINT fk_msg_resiverUser               FOREIGN KEY (resiverUserId)   REFERENCES users(UserId)     ON DELETE CASCADE,"+
             "CONSTRAINT fk_msg_senderUserId              FOREIGN KEY (senderUserId)    REFERENCES users(UserId)      ON DELETE CASCADE)",
-        insertIntoTable :"INSERT INTO msg (resiverUserId,senderUserId,atDate,atTime) VALUES ?",
+        insertIntoTable :"INSERT INTO msg (resiverUserId,senderUserId,atDate,atTime,title,msg) VALUES ?",
         outboxMsg:"",
-        inboxeMsg:""
+        inboxeMsg:"",
+        deleteNotice : "DELETE FROM notice WHERE UserId = ? AND ClassID = ? AND atDate = ? AND atTime = ?"
     },
     multiTableQuerry : {
         SearchClassIDWithDeviceIdUserIDTime : "SELECT classID FROM studentClass WHERE ClassID IN (SELECT ClassID FROM classes WHERE locationID IN (SELECT locationID FROM device WHERE DeviceId = ?) AND dateOfWeek = ? AND startTime BETWEEN ? AND ?) AND UserID = ?",
         setStuentNotificationFlag :"UPDATE users SET NotificationFlag = 1 WHERE UserID IN (SELECT UserId FROM studentClass WHERE ClassID = ?)",
-        setGuardianNotificationFlag:"UPDATE guardian SET NotificationFlag = 1 WHERE guardianNIC IN (SELECT guardianNIC FROM guardianStudent WHERE UserId IN (SELECT UserId FROM studentClass WHERE ClassID = ?))"
+        setGuardianNotificationFlag:"UPDATE guardian SET NotificationFlag = 1 WHERE guardianNIC IN (SELECT guardianNIC FROM guardianStudent WHERE UserId IN (SELECT UserId FROM studentClass WHERE ClassID = ?))",
     }
 }
 

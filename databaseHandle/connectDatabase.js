@@ -83,6 +83,41 @@ module.exports.addNewGuardian = function InsertUser(user, callback) {
     });
 }
 
+
+
+// change Passwod functions BEGIN
+
+module.exports.changepassworsUser = function InsertUser(userId, password, callback) {
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(password, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            password = hash;
+            con.query(tableSchema.tables.users.changePassword, [password, userId], callback);
+        })
+    });
+}
+
+
+module.exports.ChangePasswordGuardian = function InsertUser(username, password, callback) {
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(password, salt, function (err, hash) {
+            if (err) {
+                throw err;
+            }
+            password = hash;
+            con.query(tableSchema.tables.guardian.changePassword, [password, username], callback);
+        })
+    });
+}
+
+//*****END********/
+
+
+
+// Delete user in user table
+
 module.exports.deleteUser = function (userId, callback) {
     con.query(tableSchema.tables.userData.deleteUser + mysql.escape(userId), callback);
 }
@@ -136,7 +171,7 @@ module.exports.countUser = function (role, callback) {
 }
 
 module.exports.selectStudentInformationFromGurdianUsername = function (username, callback) {
-    con.query(tableSchema.tables.users.selectStudentInformationFromGurdianUsername ,[username], callback);
+    con.query(tableSchema.tables.users.selectStudentInformationFromGurdianUsername, [username], callback);
 }
 
 
@@ -187,12 +222,12 @@ module.exports.addAttendaceRecord = function (data, callback) {
     con.query(tableSchema.tables.attendance.insertIntoTable, [[data]], callback);
 }
 
-module.exports.getAttendancestudent = function (month,year,classID,UserId, callback) {
-    con.query(tableSchema.tables.attendance.getAttendanceStudent, [month,year,classID,UserId], callback);
+module.exports.getAttendancestudent = function (month, year, classID, UserId, callback) {
+    con.query(tableSchema.tables.attendance.getAttendanceStudent, [month, year, classID, UserId], callback);
 }
 
-module.exports.getAttendanceTeacher = function (month,year,classID, callback) {
-    con.query(tableSchema.tables.attendance.getAttendanceTeacher, [month,year,classID], callback);
+module.exports.getAttendanceTeacher = function (month, year, classID, callback) {
+    con.query(tableSchema.tables.attendance.getAttendanceTeacher, [month, year, classID], callback);
 }
 
 // Class database request
@@ -203,6 +238,10 @@ module.exports.getSutudentEnrolledClass = function (UserID, callback) {
 
 module.exports.enrolStudents = function (data, callback) {
     con.query(tableSchema.tables.studentclass.insertIntoTable, [[data]], callback);
+}
+
+module.exports.unEnrolStudents = function (UserID, ClassID, callback) {
+    con.query(tableSchema.tables.studentclass.unEnrollStudent, [UserID,ClassID], callback);
 }
 
 module.exports.addNewClass = function (data, callback) {
@@ -234,6 +273,14 @@ module.exports.setGuardianNotificationFlag = function (classId, callback) {
     con.query(tableSchema.tables.multiTableQuerry.setGuardianNotificationFlag, classId, callback);
 }
 
+module.exports.disableNotificationFlagStudent = function (userId, callback) {
+    con.query(tableSchema.tables.multiTableQuerry.setStuentNotificationFlag, userId, callback);
+}
+
+module.exports.disablenotificationFlagGuardian = function (userId, callback) {
+    con.query(tableSchema.tables.multiTableQuerry.setGuardianNotificationFlag, userId, callback);
+}
+
 module.exports.addNotification = function (data, callback) {
     con.query(tableSchema.tables.notice.insertIntoTable, [[data]], callback);
 }
@@ -257,7 +304,46 @@ module.exports.detleteNotification = function (ClassID, UserId, atDate, atTime, 
     con.query(tableSchema.tables.notice.deleteNotice, [UserId, ClassID, atDate, atTime], callback);
 }
 
+
+
+// Message database request
+module.exports.setUserMessageFlag = function (userId, callback) {
+    con.query(tableSchema.tables.users.setMessageFlag, userId, callback);
+}
+
+module.exports.setGuardianMessageFlag = function (userId, callback) {
+    con.query(tableSchema.tables.guardian.setMessageFlag, userId, callback);
+}
+
+module.exports.addMessage = function (data, callback) {
+    con.query(tableSchema.tables.notice.insertIntoTable, [[data]], callback);
+}
+
+module.exports.getOutbox = function (userId, callback) {
+    con.query(tableSchema.tables.msg.outboxMsg, userId, callback);
+}
+
+module.exports.getInbox = function (userId, callback) {
+    con.query(tableSchema.tables.msg.inboxeMsg, userId, callback);
+}
+
+// module.exports.getNotificationType = function (callback) {
+//     con.query(tableSchema.tables.noticetype.getnoticeType, callback);
+// }
+// module.exports.addNotificationType = function (data, callback) {
+//     con.query(tableSchema.tables.noticetype.insertIntoTable, [[data]], callback);
+// }
+
+// module.exports.getNotificationTeachers = function (userId, callback) {
+//     con.query(tableSchema.tables.notice.viewTeachersNotification, userId, callback);
+// }
+
+// module.exports.detleteNotification = function (ClassID, UserId, atDate, atTime, callback) {
+//     con.query(tableSchema.tables.notice.deleteNotice, [UserId, ClassID, atDate, atTime], callback);
+// }
+
 // Fee database reques
+
 module.exports.addFeerecord = function (data, callback) {
     con.query(tableSchema.tables.fee.insertIntoTable, [[data]], callback)
 }
@@ -266,10 +352,37 @@ module.exports.changefeeRecords = function (data, callback) {
     con.query(tableSchema.tables.fee.insertIntoTable, [[data]], callback)
 }
 
+
+module.exports.getFeerecordstudent = function (month, year, classID, UserId, callback) {
+    con.query(tableSchema.tables.fee.getFeeStudent, [month, year, classID, UserId], callback);
+}
+
+module.exports.getFeerecordTeacher = function (month, year, classID, callback) {
+    con.query(tableSchema.tables.fee.getFeeTeacher, [month, year, classID], callback);
+}
+
+
+module.exports.updateFee = function (id, fee, callback) {
+    con.query(tableSchema.tables.fee.updateFee, [fee, id], callback);
+}
+
 // marks database request
 
 module.exports.addMarks = function (data, callback) {
     con.query(tableSchema.tables.mark.insertIntoTable, [data], callback)
+}
+
+
+module.exports.getMarkTeacher = function (month, year, classID, callback) {
+    con.query(tableSchema.tables.mark.getMarkTeacher, [month, year, classID], callback);
+}
+
+module.exports.getMarkstudent = function (month, year, classID, UserId, callback) {
+    con.query(tableSchema.tables.mark.getMarkStudent, [month, year, classID, UserId], callback);
+}
+
+module.exports.updateMark = function (id, mark, callback) {
+    con.query(tableSchema.tables.mark.udateMarks, [mark, id], callback);
 }
 
 // device database request
@@ -278,8 +391,8 @@ module.exports.adddevice = function (data, callback) {
     con.query(tableSchema.tables.device.insertIntoTable, [[data]], callback)
 }
 
-module.exports.getdevicedetails = function(callback){
-    con.query(tableSchema.tables.device.selectAddDevice,callback);
+module.exports.getdevicedetails = function (callback) {
+    con.query(tableSchema.tables.device.selectAddDevice, callback);
 }
 
 // guardian database request

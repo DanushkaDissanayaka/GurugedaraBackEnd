@@ -14,11 +14,12 @@ router.post("/addFee", function (req, res, next) {
     const amount = req.body.amount
 
     const feeData = [StudentId, OfficeuserId, ClassId, atDate, amount]
-    
+
     database.addFeerecord(feeData, function (err, result) {
         if (err) {
             res.json({ success: false, msg: "Something went wrong" })
-            console.log(err);        }
+            console.log(err);
+        }
         else {
             res.json({ success: true, msg: "Fee Added" })
         }
@@ -26,31 +27,55 @@ router.post("/addFee", function (req, res, next) {
 });
 
 
-router.post("/getFeeStudent",function(req,res,next){
+//Need to se multiple  update record find it need to update ClassID and Amount of Fee
+router.post("/updateFee", function (req, res, next) {
+    const fee = req.body.fee;
+    const id = req.body.id;
+    database.updateFee(id, fee, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false, massage: "Error something wrong" });
+        }
+        else {
+            res.json({ success: true, massage:"Recor Updated" });
+        }
+    });
+});
+
+router.post("/getFeeStudent", function (req, res, next) {
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
-    database.getAttendancestudent(UserId,classID, function(err,result){
-        if(err){
+    const month = req.body.month;
+    const year = req.body.year;
+    database.getFeerecordstudent(month, year, classID, UserId, function (err, result) {
+        if (err) {
             console.log(err);
-            res.json({success : false , massage : "Error something wrong"});
+            res.json({ success: false, massage: "Error something wrong" });
         }
-        else{
-            res.json({success : true , data : result});
+        else {
+            for (let index = 0; index < result.length; index++) {
+                result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+            }
+            res.json({ success: true, data: result });
         }
     });
 });
 
-router.post("/getFeeTeacher",function(req,res,next){
+router.post("/getFeeTeacher", function (req, res, next) {
     const classID = req.body.ClassId;
-    database.getAttendanceTeacher(classID , function(err,result){
-        if(err){
+    const month = req.body.month;
+    const year = req.body.year;
+    database.getFeerecordTeacher(month, year, classID, function (err, result) {
+        if (err) {
             console.log(err);
-            res.json({success : false , massage : "Error something wrong"});
+            res.json({ success: false, massage: "Error something wrong" });
         }
-        else{
-            res.json({success : true , data : result});
+        else {
+            for (let index = 0; index < result.length; index++) {
+                result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+            }
+            res.json({ success: true, data: result });
         }
     });
 });
-
 module.exports = router;
