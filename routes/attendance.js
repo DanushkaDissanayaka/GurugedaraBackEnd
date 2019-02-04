@@ -101,35 +101,40 @@ router.post("/addattendance", function (req, res, next) {
             console.log(err);
         }
         else {
-            UserId = result[0].UserId;
-            console.log(UserId);
-
-            //select class
-            database.findClassForMarkAttendance(data, function (err, result) {
-                if (err) {
-                    console.log(err);
-                    res.json({ success: false, massage: "Error something wrong" });
-                }
-                else {
-                    console.log(result);
-                    res.json({ success: false, data: "No class found" });
-
-                    if (result.length != 0) {
-
-                        const attendance = [
-                            DeviceId = deviceId,
-                            UId = UserId,
-                            ClassId = result[0].ClassID,
-                            atDate = today.format("YYYY-MM-DD"),
-                            InTime = today.format("HH:mm")
-                        ]
-                        console.log(attendance);
+            if (result.length != 0) {
+                // valide user found
+                UserId = result[0].UserId;
+                console.log(UserId);
+                //select class
+                database.findClassForMarkAttendance(data, function (err, result) {
+                    if (err) {
+                        console.log(err);
+                        res.json({ success: false, massage: "Error something wrong" });
                     }
                     else {
-                        res.json({ success: false, data: "Unauthorized access" });
+                        console.log(result);
+                        res.json({ success: false, data: "No class found" });
+
+                        if (result.length != 0) {
+
+                            const attendance = [
+                                DeviceId = deviceId,
+                                UId = UserId,
+                                ClassId = result[0].ClassID,
+                                atDate = today.format("YYYY-MM-DD"),
+                                InTime = today.format("HH:mm")
+                            ]
+                            console.log(attendance);
+                        }
+                        else {
+                            res.json({ success: false, data: "Unauthorized access" });
+                        }
                     }
-                }
-            });
+                });
+            }
+            else{
+                res.json({ success: false, data: "User not found" });
+            }
         }
     })
 });
