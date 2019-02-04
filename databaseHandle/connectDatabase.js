@@ -230,6 +230,10 @@ module.exports.getAttendanceTeacher = function (month, year, classID, callback) 
     con.query(tableSchema.tables.attendance.getAttendanceTeacher, [month, year, classID], callback);
 }
 
+module.exports.findClassForMarkAttendance = function(data,callback){
+    con.query(tableSchema.tables.multiTableQuerry.markinAAttendance,data,callback)
+}
+
 // Class database request
 
 module.exports.getSutudentEnrolledClass = function (UserID, callback) {

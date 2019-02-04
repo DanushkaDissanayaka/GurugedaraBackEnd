@@ -260,6 +260,8 @@ const tables = {
         SearchClassIDWithDeviceIdUserIDTime : "SELECT classID FROM studentClass WHERE ClassID IN (SELECT ClassID FROM classes WHERE locationID IN (SELECT locationID FROM device WHERE DeviceId = ?) AND dateOfWeek = ? AND startTime BETWEEN ? AND ?) AND UserID = ?",
         setStuentNotificationFlag :"UPDATE users SET NotificationFlag = 1 WHERE UserID IN (SELECT UserId FROM studentClass WHERE ClassID = ?)",
         setGuardianNotificationFlag:"UPDATE guardian SET NotificationFlag = 1 WHERE guardianNIC IN (SELECT guardianNIC FROM guardianStudent WHERE UserId IN (SELECT UserId FROM studentClass WHERE ClassID = ?))",
+
+        markinAAttendance:"SELECT ClassID FROM classes WHERE ClassID IN (SELECT ClassID FROM studentClass WHERE UserID IN (SELECT UserId FROM Student WHERE CardId = ?)) AND locationID IN (SELECT locationID FROM device WHERE DeviceId = ?) AND dateOfWeek = ? AND (startTime - INTERVAL 30 MINUTE)<? AND ? <(startTime + INTERVAL 30 MINUTE)"
     }
 }
 
