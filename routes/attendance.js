@@ -94,29 +94,41 @@ router.post("/addattendance", function (req, res, next) {
         time
     ]
     console.log(data);
-    database.findClassForMarkAttendance(data, function (err, result) {
+    // find student relaven to card
+    database.SelectStudentWithCardId(cardId, function (err, result) {
         if (err) {
             console.log(err);
-            res.json({ success: false, massage: "Error something wrong" });
         }
         else {
-            console.log(result);
-            res.json({ success: true, data: "No class found" });
+            const UserId = result[0].UserId;
+    //select class first
+            database.findClassForMarkAttendance(data, function (err, result) {
+                if (err) {
+                    console.log(err);
+                    res.json({ success: false, massage: "Error something wrong" });
+                }
+                else {
+                    console.log(result);
+                    res.json({ success: false, data: "No class found" });
 
-            if(result.length != 0){
-                
-                const attendance = [
-                    DeviceId = deviceId,
-                    UId = UserId,
-                    ClassId = result[0].classID,
-                    atDate = today.format("YYYY-MM-DD"),
-                    InTime = today.format("HH:mm")
-                ]
-                console.log(attendance);
-            }
-            
+                    if (result.length != 0) {
+
+                        const attendance = [
+                            DeviceId = deviceId,
+                            UId = UserId,
+                            ClassId = result[0].classID,
+                            atDate = today.format("YYYY-MM-DD"),
+                            InTime = today.format("HH:mm")
+                        ]
+                        console.log(attendance);
+                    }
+                    else{
+                        res.json({ success: false, data: "Unauthorized access" });
+                    }
+                }
+            });
         }
-    });
+    })
 });
 
 router.post("/getAttendanceStudent", function (req, res, next) {
