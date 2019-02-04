@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const database = require('../databaseHandle/connectDatabase');
+const moment = require('moment');
+const momentTz = require('moment-timezone');
 
 router.post('/message', function (req, res, next) {
     const today = momentTz.tz(new Date(), "Asia/Colombo");
