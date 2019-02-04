@@ -181,7 +181,7 @@ const tables = {
             "CONSTRAINT fk_fee_users_officeuser     FOREIGN KEY (OfficeuserId) REFERENCES users(UserID) ON DELETE CASCADE,"+
             "CONSTRAINT fk_fee_classes  FOREIGN KEY (ClassID) REFERENCES classes(ClassID) ON DELETE CASCADE)",
             insertIntoTable : "INSERT INTO fee (StudentId,OfficeuserId,ClassID,atDate,amount) VALUES ?",
-            getFeeStudent : "SELECT * FROM fee WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ? AND StudentId = ?",
+            getFeeStudent : "SELECT * FROM fee WHERE YEAR(atDate) = ? AND ClassID = ? AND StudentId = ?",
             getFeeTeacher : "SELECT * FROM `fee` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ?",
             updateFee:"UPDATE fee SET ClassID = ? amount = ? WHERE feeId = ?",
     },

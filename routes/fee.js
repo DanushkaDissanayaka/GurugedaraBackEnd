@@ -48,11 +48,12 @@ router.post("/updateFee", function (req, res, next) {
 
 
 router.post("/getFeeStudent", function (req, res, next) {
+    
     const UserId = req.body.UserId;
     const classID = req.body.ClassId;
-    const month = req.body.month;
     const year = req.body.year;
-    database.getFeerecordstudent(month, year, classID, UserId, function (err, result) {
+
+    database.getFeerecordstudent(year, classID, UserId, function (err, result) {
         if (err) {
             console.log(err);
             res.json({ success: false, massage: "Error something wrong" });

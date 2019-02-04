@@ -352,8 +352,8 @@ module.exports.changefeeRecords = function (data, callback) {
 }
 
 
-module.exports.getFeerecordstudent = function (month, year, classID, UserId, callback) {
-    con.query(tableSchema.tables.fee.getFeeStudent, [month, year, classID, UserId], callback);
+module.exports.getFeerecordstudent = function (year, classID, UserId, callback) {
+    con.query(tableSchema.tables.fee.getFeeStudent, [year, classID, UserId], callback);
 }
 
 module.exports.getFeerecordTeacher = function (month, year, classID, callback) {
