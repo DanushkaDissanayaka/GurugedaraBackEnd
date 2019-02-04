@@ -73,7 +73,7 @@ const tables = {
             'CONSTRAINT fk_student FOREIGN KEY (UserId) REFERENCES users( UserId) ON DELETE CASCADE)',
             
     insertIntoTable :'insert into Student(UserId,CardId,FeeType,School)values ?',
-    findStudentWithoutCard:'SELECT UserId FROM `Student` WHERE CardId is null',
+    findStudentWithoutCard:'SELECT * FROM users WHERE UserID IN (SELECT UserId FROM `Student` WHERE CardId is null)',
     setCardId : "UPDATE Student SET CardId = ? WHERE UserId = ?",
     selectStudentRelevantToNuid :"SELECT UserId FROM `Student` WHERE CardId = ?"
     },
