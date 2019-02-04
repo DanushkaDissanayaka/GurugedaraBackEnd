@@ -32,7 +32,7 @@ const tables = {
         disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE UserID = ?",
         selectAllRoleType:"Select * from users  WHERE role = ?",
         changePassword:"UPDATE users SET password = ? WHERE UserID = ?",
-        updateUserProfile:"UPDATE users SET  Email =? ContactNo =? AddStreet = ? AddCity = ? AddNo = ? FirstName = ? LastName = ? MiddleName = ? WHERE UserID = ?"
+        updateUserProfile:"UPDATE users SET  Email =?, ContactNo =?, AddStreet = ?, AddCity = ?, AddNo = ?, FirstName = ?, LastName = ?, MiddleName = ? WHERE UserID = ?"
     },
 
     guardian:{
@@ -60,7 +60,7 @@ const tables = {
         desebleNotificationFlag:"UPDATE guardian SET NotificationFlag = 0 WHERE UserID = ?",
         setMessageFlag:"UPDATE users SET MsgFlag = 1 WHERE username = ?",
         disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE username = ?",
-        updateGuardianProfile:"UPDATE users SET  Email =? ContactNo =? AddStreet = ? AddCity = ? AddNo = ? FirstName = ? LastName = ? MiddleName = ? WHERE username = ?"
+        updateGuardianProfile:"UPDATE users SET  Email =?, ContactNo =?, AddStreet = ?, AddCity = ?, AddNo = ?, FirstName = ?, LastName = ?, MiddleName = ? WHERE username = ?"
     },
 
     student:{
