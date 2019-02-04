@@ -42,9 +42,10 @@ router.post('/message', function (req, res, next) {
                 database.setUserMessageFlag(resiverUserId,function(err,result){
                     if (err) {
                         console.log(err);
+                        res.json({ success: false, msg: 'Something wrong msg not send' }); 
                     }
                     else{
-                        res.json({ success: false, msg: 'Mesage send' }); 
+                        res.json({ success: true, msg: 'Mesage send' }); 
                     }
                 })
             }
