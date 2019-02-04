@@ -407,3 +407,7 @@ module.exports.getgurdianInfoFromStudentId = function (userId, callback) {
 module.exports.updateGuardianprofile = function (data, callback) {
     con.query(tableSchema.tables.guardian.updateguardianProfile, data, callback)
 }
+
+module.exports.getGurdianInfomation = function (username, callback) {
+    con.query(tableSchema.tables.guardian.SelectUser, username, callback)
+}

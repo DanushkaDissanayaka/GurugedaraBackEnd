@@ -37,10 +37,6 @@ router.post('/changeUserpasswordAdmin', function (req, res, next) {
   }
 })
 
-
-
-
-
 // register user
 router.post('/studentRegister', function (req, res, next) {
 
@@ -57,11 +53,13 @@ router.post('/studentRegister', function (req, res, next) {
 
 });
 
+//debug route no need 
 router.post('/getuserId', function (req, res, next) {
   const role = req.body.role;
   console.log(getNewId(role));
 });
 
+//get student details from gurdian user name
 router.post('/getstudentFromGuardian', function (req, res, next) {
   const username = req.body.username;
   database.selectStudentInformationFromGurdianUsername(username, function (err, result) {
@@ -75,6 +73,7 @@ router.post('/getstudentFromGuardian', function (req, res, next) {
   });
 });
 
+// office user registration / addmin / teacher
 router.post('/officeuserRegister', function (req, res, next) {
 
   database.countUser(req.body.role, function (err, result) {
@@ -87,7 +86,7 @@ router.post('/officeuserRegister', function (req, res, next) {
   });
 
 });
-
+//guardian registration
 router.post('/register', function (req, res, next) {
   gurdianNic = req.body.guardianNIC;
   UserId = req.body.StudentUserId;
@@ -148,6 +147,7 @@ router.post('/register', function (req, res, next) {
   });
 });
 
+// login route
 router.post('/authenticate', function (req, res, next) {
   const username = req.body.username;
   const password = req.body.password;
@@ -194,15 +194,18 @@ router.post('/authenticate', function (req, res, next) {
   });
 });
 
+// user profile authendication not using
 router.get('/profile', passport.authenticate('jwt', { session: false }), function (req, res, next) {
   res.json({ user: req.user });
 });
 
+// route for debug purpuse look in to device data
 router.post('/device', function (req, res, next) {
   console.log(req.body);
   res.json({ success: true, massage: "this is the massage" })
 });
 
+// get user tabale user details from user id
 router.post('/findUser', function (req, res, next) {
   const userId = req.body.userId
   database.selectUser(userId, function (err, result) {
@@ -218,7 +221,7 @@ router.post('/findUser', function (req, res, next) {
   })
 })
 
-
+// get gurdian infromation from student id
 router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
   const userId = req.body.userId
   database.getgurdianInfoFromStudentId(userId, function (err, result) {
@@ -231,7 +234,7 @@ router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
   });
 });
 
-
+// user profile updata route
 router.post('/updateUserProfile', function (req, res, next) {
   sqlUser = [
     req.body.DOB,
@@ -270,9 +273,9 @@ router.post('/updateUserProfile', function (req, res, next) {
     });
   }
 
-})
+});
 
-
+// select all users for a peticuler role
 router.post('/getAllStudentDetailsFromRole', function (req, res, next) {
   const role = req.body.role
   database.gelAllusersInfoWithRole(role, function (err, result) {
@@ -283,7 +286,22 @@ router.post('/getAllStudentDetailsFromRole', function (req, res, next) {
       res.json({ success: true, data: result });
     }
   })
-})
+});
+
+
+// get guardian details route
+router.post('/getguardianDetails', function (req, res, next) {
+  const username = req.body.userId
+  database.getGurdianInfomation(username, function (err, result) {
+    if (err) {
+      res.json({ success: false, msg: "something wrong in other end" })
+    }
+    else {
+      res.json({ success: true, data: result });
+    }
+  })
+});
+
 
 module.exports = router;
 
