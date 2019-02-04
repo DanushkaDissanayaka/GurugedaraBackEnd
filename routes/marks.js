@@ -21,8 +21,10 @@ router.post('/addMarks', function (req, res, next) {
 
 
 router.post("/updateMarks", function (req, res, next) {
-    const fee = req.body.mark;
-    const id = req.body.id;
+    const mark = req.body.mark;
+    const id = req.body.markId;
+
+    data = [mark,id]
     database.updateMark(id, mark, function (err, result) {
         if (err) {
             console.log(err);

@@ -29,9 +29,13 @@ router.post("/addFee", function (req, res, next) {
 
 //Need to se multiple  update record find it need to update ClassID and Amount of Fee
 router.post("/updateFee", function (req, res, next) {
-    const fee = req.body.fee;
-    const id = req.body.id;
-    database.updateFee(id, fee, function (err, result) {
+    const fee = req.body.amount;
+    const id = req.body.feeId;
+    const classId = req.body.classId
+
+    const data = [classId,fee,id]
+
+    database.updateFee(data, function (err, result) {
         if (err) {
             console.log(err);
             res.json({ success: false, massage: "Error something wrong" });
@@ -41,6 +45,7 @@ router.post("/updateFee", function (req, res, next) {
         }
     });
 });
+
 
 router.post("/getFeeStudent", function (req, res, next) {
     const UserId = req.body.UserId;

@@ -31,7 +31,8 @@ const tables = {
         setMessageFlag:"UPDATE users SET MsgFlag = 1 WHERE UserID = ?",
         disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE UserID = ?",
         selectAllRoleType:"Select * from users  WHERE role = ?",
-        changePassword:"UPDATE users SET password = ? WHERE UserID = ?"
+        changePassword:"UPDATE users SET password = ? WHERE UserID = ?",
+        updateUserProfile:"UPDATE users SET  Email =? ContactNo =? AddStreet = ? AddCity = ? AddNo = ? FirstName = ? LastName = ? MiddleName = ? WHERE UserID = ?"
     },
 
     guardian:{
@@ -59,6 +60,7 @@ const tables = {
         desebleNotificationFlag:"UPDATE guardian SET NotificationFlag = 0 WHERE UserID = ?",
         setMessageFlag:"UPDATE users SET MsgFlag = 1 WHERE username = ?",
         disableMessageFlag:"UPDATE users SET MsgFlag = 0 WHERE username = ?",
+        updateGuardianProfile:"UPDATE users SET  Email =? ContactNo =? AddStreet = ? AddCity = ? AddNo = ? FirstName = ? LastName = ? MiddleName = ? WHERE username = ?"
     },
 
     student:{
@@ -168,6 +170,7 @@ const tables = {
     },
     fee:{
         createTable :"create table fee("+
+            "feeId int NOT NULL AUTO_INCREMENT,"+
             "StudentId    varchar(10),"+
             "OfficeuserId varchar(10),"+
             "ClassID   varchar(10),"+
@@ -180,10 +183,11 @@ const tables = {
             insertIntoTable : "INSERT INTO fee (StudentId,OfficeuserId,ClassID,atDate,amount) VALUES ?",
             getFeeStudent : "SELECT * FROM fee WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ? AND StudentId = ?",
             getFeeTeacher : "SELECT * FROM `fee` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ?",
-            updateFee:"",
+            updateFee:"UPDATE fee SET ClassID = ? amount = ? WHERE feeId = ?",
     },
     mark:{
         createTable :"create table mark("+
+            "markId int NOT NULL AUTO_INCREMENT,"+
             "UserId    varchar(10),"+
             "ClassID   varchar(10),"+
             "atDate    date,"+
@@ -195,7 +199,7 @@ const tables = {
             insertIntoTable :"INSERT INTO mark (UserId,ClassID,atDate,marks,description) VALUES ?",
             getMarkStudent : "SELECT * FROM mark WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ? AND UserId = ?",
             getMarkTeacher : "SELECT * FROM `mark` WHERE MONTH(atDate) = ? AND YEAR(atDate) = ? AND ClassID = ?",
-            udateMarks:"",
+            udateMarks:"UPDATE mark SET marks = ? WHERE markId = ?",
     },
     notice:{
         createTable:"create table notice(" +

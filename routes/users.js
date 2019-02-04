@@ -7,6 +7,40 @@ const database = require('../databaseHandle/connectDatabase');
 const moment = require('moment');
 const momentTz = require('moment-timezone');
 
+
+//change user password by addmin 
+
+router.post('/changeUserpasswordAdmin', function (req, res, next) {
+  const role = req.body.role
+  const password = req.body.password
+  const userId = req.body.userId
+
+  if (role == 'guardian') {
+    database.ChangePasswordGuardian(userId, password, function (err, result) {
+      if (err) {
+        res.json({ success: false, msg: "error canot change password" });
+      }
+      else {
+        res.json({ success: true, msg: "password change success" });
+      }
+    });
+  }
+  else {
+    database.changepassworsUser(userId, password, function (err, result) {
+      if (err) {
+        res.json({ success: false, msg: "error canot change password" });
+      }
+      else {
+        res.json({ success: true, msg: "password change success" });
+      }
+    });
+  }
+})
+
+
+
+
+
 // register user
 router.post('/studentRegister', function (req, res, next) {
 
@@ -194,7 +228,48 @@ router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
     else {
       res.json({ success: true, data: result });
     }
-  })
+  });
+});
+
+
+router.post('/updateUserProfile', function (req, res, next) {
+  sqlUser = [
+    req.body.DOB,
+    req.body.email,
+    req.body.username,
+    req.body.ContactNo,
+    req.body.AddStreet,
+    req.body.AddCity,
+    req.body.AddNo,
+    req.body.FirstName,
+    req.body.LastName,
+    req.body.MiddleName,
+    req.body.userId
+  ]
+
+  const role = req.body.role
+
+  if (role == "guardian") {
+    database.updateGuardianprofile(sqlState, function (err, result) {
+      if (err) {
+        res.json({ success: false, msg: "Update error please try again later" });
+      }
+      else {
+        res.json({ success: true, msg: "Update done update profile" });
+      }
+    });
+  }
+  else {
+    database.updateUserprofile(sqlState, function (err, result) {
+      if (err) {
+        res.json({ success: false, msg: "Update error please try again later" });
+      }
+      else {
+        res.json({ success: true, msg: "Update done update profile" });
+      }
+    });
+  }
+
 })
 
 

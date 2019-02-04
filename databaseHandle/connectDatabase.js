@@ -122,6 +122,11 @@ module.exports.deleteUser = function (userId, callback) {
     con.query(tableSchema.tables.userData.deleteUser + mysql.escape(userId), callback);
 }
 
+// Update user information user table
+module.exports.updateUserprofile = function (data, callback) {
+    con.query(tableSchema.tables.users.updateUserProfile, data, callback)
+}
+
 //serch student before register guardian
 module.exports.serchStuentGuardian = function (gurdianNic, callback) {
     con.query(tableSchema.tables.guardianstudent.selectStudents + mysql.escape(gurdianNic), callback);
@@ -305,7 +310,6 @@ module.exports.detleteNotification = function (ClassID, UserId, atDate, atTime, 
 }
 
 
-
 // Message database request
 module.exports.setUserMessageFlag = function (userId, callback) {
     con.query(tableSchema.tables.users.setMessageFlag, userId, callback);
@@ -362,8 +366,8 @@ module.exports.getFeerecordTeacher = function (month, year, classID, callback) {
 }
 
 
-module.exports.updateFee = function (id, fee, callback) {
-    con.query(tableSchema.tables.fee.updateFee, [fee, id], callback);
+module.exports.updateFee = function (data, callback) {
+    con.query(tableSchema.tables.fee.updateFee, data, callback);
 }
 
 // marks database request
@@ -381,8 +385,8 @@ module.exports.getMarkstudent = function (month, year, classID, UserId, callback
     con.query(tableSchema.tables.mark.getMarkStudent, [month, year, classID, UserId], callback);
 }
 
-module.exports.updateMark = function (id, mark, callback) {
-    con.query(tableSchema.tables.mark.udateMarks, [mark, id], callback);
+module.exports.updateMark = function (data, callback) {
+    con.query(tableSchema.tables.mark.udateMarks, data, callback);
 }
 
 // device database request
@@ -398,4 +402,8 @@ module.exports.getdevicedetails = function (callback) {
 // guardian database request
 module.exports.getgurdianInfoFromStudentId = function (userId, callback) {
     con.query(tableSchema.tables.guardian.getGurdianInfoFromStudentId, [userId], callback)
+}
+
+module.exports.updateGuardianprofile = function (data, callback) {
+    con.query(tableSchema.tables.guardian.updateguardianProfile, data, callback)
 }
