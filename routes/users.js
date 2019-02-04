@@ -255,6 +255,8 @@ router.post('/updateUserProfile', function (req, res, next) {
   if (role == "guardian") {
     database.updateGuardianprofile(sqlUser, function (err, result) {
       if (err) {
+        console.log(err);
+        
         res.json({ success: false, msg: "Update error please try again later" });
       }
       else {
@@ -265,6 +267,7 @@ router.post('/updateUserProfile', function (req, res, next) {
   else {
     database.updateUserprofile(sqlUser, function (err, result) {
       if (err) {
+        console.log(err);
         res.json({ success: false, msg: "Update error please try again later" });
       }
       else {
