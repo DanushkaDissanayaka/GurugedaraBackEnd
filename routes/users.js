@@ -294,6 +294,7 @@ router.post('/getguardianDetails', function (req, res, next) {
   const username = req.body.userId
   database.getGurdianInfomation(username, function (err, result) {
     if (err) {
+      console.log(err);
       res.json({ success: false, msg: "something wrong in other end" })
     }
     else {
