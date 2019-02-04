@@ -27,14 +27,14 @@ router.post('/message', function (req, res, next) {
             res.json({ success: false, msg: 'Something went wrong' });
         }
         else {
-            if(role = "guardian"){
+            if(role == "guardian"){
                 database.setGuardianMessageFlag(resiverUserId,function(err,result){
                     if (err) {
                         console.log(err);
                         res.json({ success: false, msg: 'Something went wrong' }); 
                     }
                     else{
-
+                        res.json({ success: true, msg: 'Mesage send' }); 
                     }
                 })
             }
@@ -42,7 +42,7 @@ router.post('/message', function (req, res, next) {
                 database.setUserMessageFlag(resiverUserId,function(err,result){
                     if (err) {
                         console.log(err);
-                        res.json({ success: false, msg: 'Something went wrong' }); 
+                        res.json({ success: false, msg: 'Mesage send' }); 
                     }
                     else{
 

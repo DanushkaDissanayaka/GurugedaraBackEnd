@@ -315,7 +315,7 @@ module.exports.setGuardianMessageFlag = function (userId, callback) {
 }
 
 module.exports.addMessage = function (data, callback) {
-    con.query(tableSchema.tables.msg.insertIntoTable, [[data]], callback);
+    con.query(tableSchema.tables.notice.insertIntoTable, [[data]], callback);
 }
 
 module.exports.getOutbox = function (userId, callback) {
