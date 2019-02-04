@@ -119,7 +119,7 @@ router.post("/addattendance", function (req, res, next) {
                         const attendance = [
                             DeviceId = deviceId,
                             UId = UserId,
-                            ClassId = result[0].classID,
+                            ClassId = result[0].ClassID,
                             atDate = today.format("YYYY-MM-DD"),
                             InTime = today.format("HH:mm")
                         ]
