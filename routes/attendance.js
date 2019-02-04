@@ -93,6 +93,7 @@ router.post("/addattendance", function (req, res, next) {
         time,
         time
     ]
+    var UserId = null
     console.log(data);
     // find student relaven to card
     database.SelectStudentWithCardId(cardId, function (err, result) {
@@ -100,8 +101,10 @@ router.post("/addattendance", function (req, res, next) {
             console.log(err);
         }
         else {
-            const UserId = result[0].UserId;
-    //select class first
+            UserId = result[0].UserId;
+            console.log(UserId);
+
+            //select class
             database.findClassForMarkAttendance(data, function (err, result) {
                 if (err) {
                     console.log(err);
@@ -122,7 +125,7 @@ router.post("/addattendance", function (req, res, next) {
                         ]
                         console.log(attendance);
                     }
-                    else{
+                    else {
                         res.json({ success: false, data: "Unauthorized access" });
                     }
                 }
