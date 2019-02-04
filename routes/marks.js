@@ -51,6 +51,7 @@ router.post("/getmarksStudent", function (req, res, next) {
         else {
             for (let index = 0; index < result.length; index++) {
                 result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+                result[index].atTime = moment(result[index].atTime).format("YYYY-MM-DD HH-MM");
             }
             res.json({ success: true, data: result });
         }
@@ -69,6 +70,7 @@ router.post("/getMarkTeacher", function (req, res, next) {
         else {
             for (let index = 0; index < result.length; index++) {
                 result[index].atDate = moment(result[index].atDate).format("YYYY-MM-DD");
+                result[index].atTime = moment(result[index].atTime).format("YYYY-MM-DD HH-MM");
             }
             res.json({ success: true, data: result });
         }
