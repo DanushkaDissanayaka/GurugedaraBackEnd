@@ -76,7 +76,7 @@ router.post('/outbox', function (req, res, next) {
         }
         else {
             console.log(result);
-            res.json({ success: true, msg: 'Notice deleted' });
+            res.json({ success: true, data:result });
         }
     });
 });
