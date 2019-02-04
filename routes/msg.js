@@ -53,4 +53,32 @@ router.post('/message', function (req, res, next) {
     });
 });
 
+router.post('/inbox', function (req, res, next) {
+    const userId = req.body.userId
+    database.getInbox(userId, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false, msg: 'Something went wrong' });
+        }
+        else {
+            console.log(result);
+            res.json({ success: true, data: result });
+        }
+    });
+});
+
+router.post('/outbox', function (req, res, next) {
+    const userId = req.body.userId
+    database.getOutbox(userId, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.json({ success: false, msg: 'Something went wrong' });
+        }
+        else {
+            console.log(result);
+            res.json({ success: true, msg: 'Notice deleted' });
+        }
+    });
+});
+
 module.exports = router;

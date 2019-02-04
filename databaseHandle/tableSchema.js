@@ -252,8 +252,8 @@ const tables = {
             "CONSTRAINT fk_msg_resiverUser               FOREIGN KEY (resiverUserId)   REFERENCES users(UserId)     ON DELETE CASCADE,"+
             "CONSTRAINT fk_msg_senderUserId              FOREIGN KEY (senderUserId)    REFERENCES users(UserId)      ON DELETE CASCADE)",
         insertIntoTable :"INSERT INTO msg (resiverUserId,senderUserId,atDate,atTime,title,msg) VALUES ?",
-        outboxMsg:"",
-        inboxeMsg:"",
+        outboxMsg:"SELECT * FROM msg WHERE senderUserId = ?",
+        inboxeMsg:"SELECT * FROM mdg WHERE resiverUserId =?",
         deleteNotice : "DELETE FROM notice WHERE UserId = ? AND ClassID = ? AND atDate = ? AND atTime = ?"
     },
     multiTableQuerry : {
