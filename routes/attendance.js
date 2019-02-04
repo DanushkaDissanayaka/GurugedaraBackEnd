@@ -125,21 +125,21 @@ router.post("/addattendance", function (req, res, next) {
                                 InTime = today.format("HH:mm")
                             ]
                             console.log(attendance);
-                            database.addAttendaceRecord(data, function (err, result) {
-                                if (err) {
-                                    console.log(err);
-                                    if (err.sqlState == '23000') {
-                                        res.json({ success: false, massage: 'Attendance Alredy marked' });
-                                        return false;
-                                    }
-                                    else {
-                                        res.json({ success: false, massage: 'System Error' });
-                                    }
-                                }
-                                else {
-                                    res.json({ success: true, massage: 'Attendance Added' });
-                                }
-                            });
+                            // database.addAttendaceRecord(data, function (err, result) {
+                            //     if (err) {
+                            //         console.log(err);
+                            //         if (err.sqlState == '23000') {
+                            //             res.json({ success: false, massage: 'Attendance Alredy marked' });
+                            //             return false;
+                            //         }
+                            //         else {
+                            //             res.json({ success: false, massage: 'System Error' });
+                            //         }
+                            //     }
+                            //     else {
+                            //         res.json({ success: true, massage: 'Attendance Added' });
+                            //     }
+                            // });
                         }
                         else {
                             res.json({ success: false, massage: "Unauthorized access" });
