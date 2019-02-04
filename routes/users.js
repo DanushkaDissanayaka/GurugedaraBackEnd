@@ -237,9 +237,7 @@ router.post('/getGurdianInfoFromStudentId', function (req, res, next) {
 // user profile updata route
 router.post('/updateUserProfile', function (req, res, next) {
   sqlUser = [
-    req.body.DOB,
     req.body.email,
-    req.body.username,
     req.body.ContactNo,
     req.body.AddStreet,
     req.body.AddCity,
