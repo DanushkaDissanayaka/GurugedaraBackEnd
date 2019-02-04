@@ -150,11 +150,6 @@ module.exports.selectUser = function selectUser(usrname, callback) {
     con.query(tableSchema.tables.userData.SelectUser + mysql.escape(usrname), callback);
 }
 
-// serch gurdian
-module.exports.selectGuardian = function selectUser(usrname, callback) {
-    con.query(tableSchema.tables.guardian.SelectUser + mysql.escape(usrname), callback);
-}
-
 module.exports.comparePassword = function (candidatePassword, hash, callback) {
     //console.log(candidatePassword);
     //console.log(hash);
@@ -409,5 +404,9 @@ module.exports.updateGuardianprofile = function (data, callback) {
 }
 
 module.exports.getGurdianInfomation = function (username, callback) {
-    con.query(tableSchema.tables.guardian.SelectUser, username, callback)
+    con.query(tableSchema.tables.guardian.SelectUser+ mysql.escape(username), callback)
+}
+
+module.exports.selectGuardian = function selectUser(usrname, callback) {
+    con.query(tableSchema.tables.guardian.SelectUser + mysql.escape(usrname), callback);
 }
