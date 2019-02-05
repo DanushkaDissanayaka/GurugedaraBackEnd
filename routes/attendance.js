@@ -113,7 +113,7 @@ router.post("/addattendance", function (req, res, next) {
                     }
                     else {
                         console.log(result);
-                        res.json({ success: false, massage: "No class found" });
+                       // res.json({ success: false, massage: "No class found" });
 
                         if (result.length != 0) {
 
