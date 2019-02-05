@@ -125,7 +125,7 @@ router.post("/addattendance", function (req, res, next) {
                                 InTime = today.format("HH:mm")
                             ]
                             console.log(attendance);
-                            database.addAttendaceRecord(data, function (err, result) {
+                            database.addAttendaceRecord(attendance, function (err, result) {
                                 if (err) {
                                     console.log(err);
                                     if (err.sqlState == '23000') {
