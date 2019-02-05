@@ -429,7 +429,7 @@ function user(User, ID) {
         return false;
       }
       else {
-        callback({ success: true, msg: 'User registerd' + userDetails.usetID });
+        callback({ success: true, msg: 'User registerd' + " " +userDetails.usetID });
         return true;
       }
     });
